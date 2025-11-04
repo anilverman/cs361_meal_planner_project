@@ -1,11 +1,13 @@
 {
   "type": "module",
   "name": "meal-planner-backend",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.19.2",
-    "nanoid": "^5.0.7"
+    "nanoid": "^5.0.7",
+    "sqlite": "^4.2.1",
+    "sqlite3": "^5.1.6"
   },
   "scripts": {
     "dev": "node src/server.js"

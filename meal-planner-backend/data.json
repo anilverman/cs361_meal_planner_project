@@ -1,0 +1,65 @@
+{
+  "recipes": [
+    {
+      "id": 2,
+      "title": "test",
+      "instructions": null,
+      "ingredients": [
+        {
+          "name": "test",
+          "qty": 1,
+          "unit": "each"
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "title": "hi",
+      "instructions": null,
+      "ingredients": [
+        {
+          "name": "rtest",
+          "qty": 1,
+          "unit": "each"
+        }
+      ]
+    }
+  ],
+  "meal_plan": [
+    {
+      "week_start": "2025-11-04",
+      "day_index": 0,
+      "recipe_id": 2
+    },
+    {
+      "week_start": "2025-11-04",
+      "day_index": 1,
+      "recipe_id": 1
+    },
+    {
+      "week_start": "2025-11-04",
+      "day_index": 2,
+      "recipe_id": 2
+    },
+    {
+      "week_start": "2025-11-04",
+      "day_index": 3,
+      "recipe_id": 1
+    },
+    {
+      "week_start": "2025-11-04",
+      "day_index": 4,
+      "recipe_id": 2
+    },
+    {
+      "week_start": "2025-11-04",
+      "day_index": 5,
+      "recipe_id": 1
+    },
+    {
+      "week_start": "2025-11-04",
+      "day_index": 6,
+      "recipe_id": 2
+    }
+  ]
+}
