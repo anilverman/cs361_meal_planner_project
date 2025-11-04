@@ -11,7 +11,7 @@ export default function Planner(){
 
   const makePlan = async ()=>{
     if(picked.length < 7){ alert('Pick at least 7 recipe IDs (can repeat)'); return }
-    await generatePlan({ weekStart, recipeIds: picked.slice(0,7) })
+    await generatePlan({ weekStart, recipeIds: picked })
     const rows = await getWeekPlan(weekStart)
     setPlan(rows)
   }
@@ -28,7 +28,7 @@ export default function Planner(){
           <button key={r.id} onClick={()=>setPicked(p=>[...p, r.id])}>{r.title}</button>
         ))}
       </div>
-      <p>Picked: {picked.join(', ')}</p>
+      <p>Picked: {picked.map(id => (recipes.find(r => r.id === id)?.title || id)).join(', ')}</p>
       <button onClick={makePlan}>Generate Plan</button>
 
       {!!plan.length && (
