@@ -1,3 +1,3 @@
-# cs361_assignment2
+# cs361_meal_planner_project
 
 # test project
