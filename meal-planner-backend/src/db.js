@@ -31,10 +31,11 @@ CREATE TABLE IF NOT EXISTS recipe_ingredients (
 
 CREATE TABLE IF NOT EXISTS meal_plan (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  week_start TEXT NOT NULL,      -- ISO date string
+  week_start TEXT NOT NULL,      -- ISO date string (Monday)
   day_index INTEGER NOT NULL,    -- 0..6
+  meal_slot INTEGER NOT NULL,    -- 0=Breakfast, 1=Lunch, 2=Dinner
   recipe_id INTEGER NOT NULL,
-  UNIQUE(week_start, day_index),
+  UNIQUE(week_start, day_index, meal_slot),
   FOREIGN KEY (recipe_id) REFERENCES recipes(id) ON DELETE CASCADE
 );
 `);

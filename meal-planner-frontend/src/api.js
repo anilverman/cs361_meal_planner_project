@@ -19,8 +19,8 @@ export const deleteRecipe = (id) =>
   fetch(`${API}/recipes/${id}`, { method: "DELETE" }).then(r => r.json());
 
 // Planner / Shopping
-export const generatePlan = (payload) =>
-  fetch(`${API}/planner/generate`, {
+export const savePlan = (payload) =>
+  fetch(`${API}/planner/save`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),
