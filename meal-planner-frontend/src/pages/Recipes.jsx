@@ -67,6 +67,9 @@ export default function Recipes(){
 
   return (
     <div>
+      <div style={{ marginBottom:12 }}>
+        <h4>Create meal plans, add recipes, generate grocery lists, and more coming soon!</h4>
+      </div>
       <div style={{ display:'flex', gap:16 }}>
         <div style={{ flex:1 }}>
           <h3>All Recipes</h3>

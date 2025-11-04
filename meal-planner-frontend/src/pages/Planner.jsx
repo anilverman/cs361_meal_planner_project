@@ -39,7 +39,12 @@ export default function Planner(){
   }
 
   return (
+    
     <div>
+      <div>
+        <h4>Instructions: Add recipes, then create a meal plan. Now you are able to generate a shopping list! </h4>
+      </div>
+
       <label>Week start:&nbsp;
         <input type="date" value={weekStart} onChange={e=>setWeekStart(e.target.value)} />
       </label>
@@ -77,6 +82,9 @@ export default function Planner(){
 
       <div style={{marginTop:12}}>
         <button onClick={onSave}>Save Plan</button>
+      </div>
+      <div style={{marginTop:12}}>
+        <button>Randomly Generate Plan</button>
       </div>
     </div>
   )
