@@ -34,17 +34,57 @@ r.post('/', async (req, res) => {
 
     if (ingredients.length) {
       const stmt = await db.prepare('INSERT INTO recipe_ingredients (recipe_id, name, qty, unit) VALUES (?, ?, ?, ?)');
-      try {
-        for (const i of ingredients) {
-          await stmt.run(recipeId, i.name, i.qty, i.unit);
-        }
-      } finally {
-        await stmt.finalize();
-      }
+      try { for (const i of ingredients) { await stmt.run(recipeId, i.name, i.qty, i.unit); } }
+      finally { await stmt.finalize(); }
     }
 
     await dumpToJson();
     res.status(201).json({ id: recipeId });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// PUT /recipes/:id – update title/instructions and REPLACE ingredients
+r.put('/:id', async (req, res) => {
+  try {
+    const id = +req.params.id;
+    const { title, instructions, ingredients = [] } = req.body;
+    if (!title?.trim()) return res.status(400).json({ error: 'title required' });
+
+    await db.exec('BEGIN');
+    try {
+      const row = await db.get('SELECT id FROM recipes WHERE id=?', id);
+      if (!row) throw new Error('not found');
+      await db.run('UPDATE recipes SET title=?, instructions=? WHERE id=?', title, instructions || null, id);
+      await db.run('DELETE FROM recipe_ingredients WHERE recipe_id=?', id);
+      if (ingredients.length) {
+        const stmt = await db.prepare('INSERT INTO recipe_ingredients (recipe_id, name, qty, unit) VALUES (?, ?, ?, ?)');
+        try { for (const i of ingredients) { await stmt.run(id, i.name, i.qty, i.unit); } }
+        finally { await stmt.finalize(); }
+      }
+      await db.exec('COMMIT');
+    } catch (e) {
+      await db.exec('ROLLBACK');
+      if (e.message === 'not found') return res.status(404).json({ error: 'not found' });
+      throw e;
+    }
+
+    await dumpToJson();
+    res.json({ ok: true });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// DELETE /recipes/:id – remove recipe and its ingredients
+r.delete('/:id', async (req, res) => {
+  try {
+    const id = +req.params.id;
+    await db.exec('BEGIN');
+    try {
+      const res1 = await db.run('DELETE FROM recipes WHERE id=?', id);
+      await db.exec('COMMIT');
+      if (res1.changes === 0) return res.status(404).json({ error: 'not found' });
+    } catch (e) { await db.exec('ROLLBACK'); throw e; }
+    await dumpToJson();
+    res.json({ ok: true });
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 

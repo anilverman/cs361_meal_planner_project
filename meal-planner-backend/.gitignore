@@ -1,2 +1,4 @@
 node_modules
 .env
+mealplanner.db
+data.json
